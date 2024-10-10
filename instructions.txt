@@ -1,0 +1,12 @@
+INSTRUCTIONS
+
+1.JDK 21 e Maven installed
+
+2.Clone project repository
+
+3.Execute project through IDE  or command line: ./mvnw quarkus:dev
+
+4.Access http://localhost:8080
+
+5.To access Swagger documentation: http://localhost:8080/swagger-ui
+

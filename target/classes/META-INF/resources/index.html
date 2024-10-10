@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labseq Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        input, button { font-size: 16px; padding: 5px 10px; }
+        #result { margin-top: 20px; }
+        .error { color: red; }
+    </style>
+    <script>
+        async function calculateLabseq() {
+            const n = document.getElementById('input').value;
+            const resultElement = document.getElementById('result');
+
+            if (n === '' || isNaN(n) || parseInt(n) < 0) {
+                resultElement.innerHTML = '<span class="error">Error: Please enter a non-negative integer.</span>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/labseq/${n}`);
+                const text = await response.text();
+
+                if (!response.ok) {
+                    throw new Error(text || 'An error occurred');
+                }
+
+                resultElement.textContent = `l(${n}) = ${text}`;
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>Labseq Calculator</h1>
+<input type="number" id="input" min="0" placeholder="Enter n">
+<button onclick="calculateLabseq()">Calculate</button>
+<p id="result"></p>
+</body>
+</html>
